@@ -1,0 +1,96 @@
+version: "3.9"
+
+services:
+  module1-code-review:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        MODULE: module1_code_review
+    ports:
+      - "8001:8000"
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_SERVICE_KEY=${SUPABASE_SERVICE_KEY}
+      - GITHUB_WEBHOOK_SECRET=${GITHUB_WEBHOOK_SECRET}
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+    volumes:
+      - ./backend/shared:/app/shared
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  module2-knowledge:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        MODULE: module2_knowledge
+    ports:
+      - "8002:8000"
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_SERVICE_KEY=${SUPABASE_SERVICE_KEY}
+    volumes:
+      - ./backend/shared:/app/shared
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  module3-leetcode:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        MODULE: module3_leetcode
+    ports:
+      - "8003:8000"
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_SERVICE_KEY=${SUPABASE_SERVICE_KEY}
+      - RESEND_API_KEY=${RESEND_API_KEY}
+    volumes:
+      - ./backend/shared:/app/shared
+    restart: unless-stopped
+
+  module4-vision:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        MODULE: module4_vision
+    ports:
+      - "8004:8000"
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_SERVICE_KEY=${SUPABASE_SERVICE_KEY}
+    volumes:
+      - ./backend/shared:/app/shared
+    restart: unless-stopped
+
+  module5-career:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        MODULE: module5_career
+    ports:
+      - "8005:8000"
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_SERVICE_KEY=${SUPABASE_SERVICE_KEY}
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+    volumes:
+      - ./backend/shared:/app/shared
+    restart: unless-stopped
