@@ -1,14 +1,14 @@
-# DevOS — AI-Powered Developer Operating System
+# DevOS v2 — AI-Powered Developer Operating System
 
-> A unified intelligent platform that makes developers measurably better — combining AI code review, a personal knowledge graph, ML-driven DSA preparation, vision-based system design analysis, and career analytics in one cohesive system.
+> A unified intelligent platform that makes developers measurably better — combining AI code review, a personal knowledge graph, ML-driven DSA preparation, vision-based system design analysis, career analytics, and an autonomous PR review agent in one cohesive system.
 
-**Live Demo:** [devos.vercel.app](https://devos.vercel.app) &nbsp;|&nbsp; **Backend:** [devos-api.onrender.com](https://devos-api.onrender.com)
+**Live Demo:** [devos-2806.vercel.app](https://devos-2806.vercel.app) &nbsp;|&nbsp; **Backend:** Hugging Face Spaces (6 microservices)
 
 ---
 
 ## What is DevOS?
 
-DevOS is a full-stack AI platform built for software engineers who want to accelerate their growth. It solves 5 real problems developers face every day:
+DevOS is a full-stack AI platform built for software engineers who want to accelerate their growth. It solves 6 real problems developers face every day:
 
 | Module | Problem Solved |
 |--------|---------------|
@@ -16,7 +16,8 @@ DevOS is a full-stack AI platform built for software engineers who want to accel
 | Knowledge Graph (RAG) | "I read great articles but forget everything in a week" |
 | LeetCode Intelligence Tracker | "I practice randomly with no strategy" |
 | System Design Vision Chat | "I can't get expert feedback on my architecture diagrams" |
-| Career Analytics Dashboard | "I don't know my exact skill gaps vs FAANG requirements" |
+| Career Analytics Dashboard | "I don't know my exact skill gaps vs job requirements" |
+| **Autonomous PR Review Agent** | **"I want AI to review every PR automatically without being asked"** |
 
 ---
 
@@ -24,15 +25,15 @@ DevOS is a full-stack AI platform built for software engineers who want to accel
 
 **Frontend:** Next.js 15 · TypeScript · Tailwind CSS · Framer Motion · Recharts · D3.js
 
-**Backend:** FastAPI (Python 3.11) · 5 microservices · Docker · Uvicorn
+**Backend:** FastAPI (Python 3.11) · 6 microservices · Docker · Uvicorn
 
-**AI:** Groq LLaMA 3.1 70B · LLaMA 3.2 Vision · Sentence Transformers
+**AI:** Groq LLaMA 3.3 70B · LLaMA 4 Scout Vision · Sentence Transformers · **LangGraph**
 
-**Database:** Supabase (PostgreSQL + pgvector) · Supabase Storage · Supabase Auth
+**Database:** Supabase (PostgreSQL + pgvector) · Supabase Storage
 
-**Infra:** Render (backend) · Vercel (frontend) · Docker Compose · cron-job.org
+**Infra:** Hugging Face Spaces (all backends) · Vercel (frontend) · Docker
 
-**Notifications:** Resend (email) · GitHub Webhooks
+**Integrations:** GitHub Webhooks · GitHub API · Resend (email)
 
 ---
 
@@ -40,31 +41,30 @@ DevOS is a full-stack AI platform built for software engineers who want to accel
 
 ```
 devos/
-├── frontend/          # Next.js 15 — unified app, 5 module routes
+├── frontend/                     # Next.js 15 — unified app, 6 module routes
 │   ├── app/
-│   │   ├── page.tsx              # Cinematic landing page
+│   │   ├── page.tsx              # Landing page
 │   │   ├── dashboard/            # Unified dashboard
 │   │   ├── code-review/          # Module 1
 │   │   ├── knowledge/            # Module 2
 │   │   ├── leetcode/             # Module 3
 │   │   ├── design-chat/          # Module 4
-│   │   └── career/               # Module 5
+│   │   ├── career/               # Module 5
+│   │   └── agent/                # Module 6 — PR Review Agent
 │   └── components/
-├── backend/
-│   ├── shared/                   # Supabase client, Groq client, auth middleware
-│   ├── module1_code_review/      # GitHub webhook → LLM review pipeline
-│   ├── module2_knowledge/        # RAG ingestion + semantic search
-│   ├── module3_leetcode/         # Scraper + ML spaced repetition
-│   ├── module4_vision/           # Vision API + design chat
-│   └── module5_career/           # GitHub API + gap analysis + PDF
-└── docker-compose.yml
+├── hf_module1_code_review/       # HF Space — GitHub webhook → LLM review
+├── hf_module2_knowledge/         # HF Space — RAG ingestion + semantic search
+├── hf_module3_leetcode/          # HF Space — SM-2 spaced repetition + email
+├── hf_module4_vision/            # HF Space — Vision API + design chat
+├── hf_module5_career/            # HF Space — GitHub API + gap analysis + PDF
+└── hf_module6_agent/             # HF Space — LangGraph autonomous PR agent
 ```
 
 ---
 
 ## Module 1 — AI Code Review Engine
 
-Connects to your GitHub via webhooks. Every PR you push gets automatically reviewed by LLaMA 3.1 70B, which returns:
+Connects to your GitHub via webhooks. Every PR you push gets automatically reviewed by LLaMA 3.3 70B, which returns:
 - Security vulnerability scan
 - Code complexity score
 - Improvement suggestions with examples
@@ -89,7 +89,7 @@ Connects to your LeetCode profile and:
 
 ## Module 4 — System Design Vision Chat
 
-Upload any architecture diagram (photo, screenshot, whiteboard). LLaMA 3.2 Vision:
+Upload any architecture diagram (photo, screenshot, whiteboard). LLaMA 4 Scout Vision:
 - Identifies all components and their relationships
 - Flags single points of failure, bottlenecks, missing load balancers
 - You can chat: "How do I scale this to 10M users?"
@@ -101,8 +101,27 @@ Connects to your GitHub and analyzes:
 - Contribution velocity over time
 - Language and technology distribution
 - Commit pattern and consistency score
-- Paste any job description → gap analysis → "you're missing: Kubernetes, Go, system design"
+- Paste any job description → gap analysis → skill recommendations
 - One-click PDF report generation
+
+## Module 6 — Autonomous PR Review Agent ⚡ New in v2
+
+A LangGraph multi-agent pipeline that **autonomously watches your GitHub repos** and reviews every PR without being asked.
+
+**How it works:**
+1. GitHub webhook fires on every PR opened or updated
+2. 3 specialized AI agents run in parallel on the diff:
+   - 🔐 **Security Agent** — SQL injection, hardcoded secrets, auth flaws
+   - ⚡ **Performance Agent** — O(n²) complexity, N+1 queries, missing async
+   - 📖 **Readability Agent** — naming, SRP violations, missing docs
+3. Agents converge → weighted risk score (0–100)
+4. Unified verdict posted automatically as a GitHub PR comment
+5. Review saved to Supabase for dashboard analytics
+
+**Risk scoring:**
+- 🟢 0–39 → APPROVE
+- 🟡 40–69 → REVIEW
+- 🔴 70–100 → BLOCK
 
 ---
 
@@ -111,9 +130,9 @@ Connects to your GitHub and analyzes:
 ### Prerequisites
 - Python 3.11+
 - Node.js 18+
-- Docker Desktop
 - Supabase account
 - Groq API key (free at console.groq.com)
+- GitHub Personal Access Token (repo scope)
 
 ### 1. Clone & install
 
@@ -122,16 +141,7 @@ git clone https://github.com/Rahul-2806/devos
 cd devos
 ```
 
-### 2. Backend setup
-
-```bash
-cd backend
-pip install -r requirements.txt
-cp .env.example .env
-# Fill in your keys in .env
-```
-
-### 3. Frontend setup
+### 2. Frontend setup
 
 ```bash
 cd frontend
@@ -141,10 +151,12 @@ cp .env.local.example .env.local
 npm run dev
 ```
 
-### 4. Docker (all services at once)
+### 3. Run any backend module locally
 
 ```bash
-docker-compose up --build
+cd hf_module6_agent
+pip install -r requirements.txt
+uvicorn main:app --reload --port 8006
 ```
 
 ---
@@ -159,25 +171,48 @@ GROQ_API_KEY=your_key
 SUPABASE_URL=your_project_url
 SUPABASE_SERVICE_KEY=your_service_key
 
-# GitHub (for Module 1 webhook)
+# GitHub (for Module 1 + Module 6 webhooks)
 GITHUB_WEBHOOK_SECRET=your_secret
+GITHUB_TOKEN=your_personal_access_token
 
 # Resend (for Module 3 emails)
 RESEND_API_KEY=your_key
+```
 
-# GitHub Token (for Module 5)
-GITHUB_TOKEN=your_personal_access_token
+---
+
+## Supabase Schema (Module 6)
+
+```sql
+create table pr_reviews (
+  id                  bigserial primary key,
+  repo                text not null,
+  pr_number           integer not null,
+  pr_title            text,
+  risk_score          integer default 0,
+  verdict             text,
+  security_issues     jsonb default '[]',
+  performance_issues  jsonb default '[]',
+  readability_issues  jsonb default '[]',
+  security_severity   text default 'LOW',
+  perf_severity       text default 'LOW',
+  read_severity       text default 'LOW',
+  reviewed_at         timestamptz default now()
+);
 ```
 
 ---
 
 ## Deployment
 
-**Backend (Render):** Each module deploys as a separate web service. Set `PYTHON_VERSION=3.11.8`, start command: `python -m uvicorn main:app --host 0.0.0.0 --port $PORT`
+All backends deploy as Docker containers on **Hugging Face Spaces** (free, no sleep).
 
-**Frontend (Vercel):** Connect GitHub repo, set environment variables, deploy.
+Each module:
+1. Has its own `Dockerfile` exposing port `7860`
+2. Reads secrets from HF Space environment variables
+3. Is completely independent — deploy or update any module without touching others
 
-**Keep-alive:** Add all Render `/health` endpoints to cron-job.org (every 14 minutes).
+Frontend deploys on **Vercel** with auto-deploy on every push to `main`.
 
 ---
 
