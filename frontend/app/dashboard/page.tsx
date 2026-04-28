@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Code2, Brain, BookOpen, Eye, BarChart3, ArrowRight, Activity, CheckCircle2, Clock } from "lucide-react";
+import { Code2, Brain, BookOpen, Eye, BarChart3, ArrowRight, Activity, CheckCircle2, Clock, Bot } from "lucide-react";
 
 const modules = [
   {
@@ -35,6 +35,12 @@ const modules = [
     desc: "Analyze GitHub profile, paste job descriptions, download PDF reports",
     status: "live",
   },
+  {
+    id: 6, icon: Bot, name: "PR Review Agent", href: "/agent",
+    color: "#a855f7", bg: "rgba(168,85,247,0.1)",
+    desc: "LangGraph multi-agent pipeline — autonomously reviews every PR for security, performance and readability",
+    status: "live",
+  },
 ];
 
 export default function DashboardPage() {
@@ -59,7 +65,7 @@ export default function DashboardPage() {
           className="mb-12"
         >
           <h1 className="text-3xl font-bold text-slate-100 mb-2">Dashboard</h1>
-          <p className="text-slate-400">Your 5 AI modules, ready to use</p>
+          <p className="text-slate-400">Your 6 AI modules, ready to use</p>
         </motion.div>
 
         {/* Module grid */}
@@ -102,7 +108,7 @@ export default function DashboardPage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
+            transition={{ delay: 0.56 }}
             className="devos-card p-6 flex flex-col justify-between"
           >
             <div>
@@ -117,6 +123,7 @@ export default function DashboardPage() {
                   { step: "3", text: "Sync LeetCode username → Module 3", done: false },
                   { step: "4", text: "Upload a system diagram → Module 4", done: false },
                   { step: "5", text: "Analyze GitHub profile → Module 5", done: false },
+                  { step: "6", text: "Connect repo → PR Agent webhook", done: false },
                 ].map((item) => (
                   <div key={item.step} className="flex items-center gap-2.5 text-sm text-slate-400">
                     <span className="w-5 h-5 rounded-full border border-white/10 bg-white/[0.03] flex items-center justify-center text-[10px] text-slate-500 flex-shrink-0">
