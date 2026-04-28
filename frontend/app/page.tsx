@@ -6,7 +6,7 @@ import Link from "next/link";
 import {
   Code2, Brain, BookOpen, BarChart3,
   Github, ArrowRight, Zap, Shield, TrendingUp,
-  ChevronRight, Terminal, Eye, Cpu, Layers
+  ChevronRight, Terminal, Eye, Cpu, Layers, Bot
 } from "lucide-react";
 
 const modules = [
@@ -49,6 +49,14 @@ const modules = [
     color: "#8b5cf6", glow: "rgba(139,92,246,0.3)", href: "/career",
     stats: [{ label: "Data source", value: "GitHub API" }, { label: "Output", value: "PDF Report" }],
     tech: ["GitHub API", "D3.js", "ReportLab"],
+  },
+  {
+    id: 6, icon: Bot, name: "PR Review Agent",
+    tagline: "3 AI agents review every PR automatically",
+    description: "LangGraph multi-agent pipeline watches your repos autonomously. Security, performance, and readability agents converge on a unified verdict — posted as a PR comment without being asked.",
+    color: "#a855f7", glow: "rgba(168,85,247,0.3)", href: "/agent",
+    stats: [{ label: "Agents", value: "3 parallel" }, { label: "Trigger", value: "Automatic" }],
+    tech: ["LangGraph", "GitHub Webhooks", "Supabase"],
   },
 ];
 
@@ -183,7 +191,7 @@ export default function LandingPage() {
             <span className="font-bold text-slate-100 tracking-tight">DevOS</span>
           </div>
           <div className="hidden md:flex items-center gap-6">
-            {[["Code Review", "/code-review"], ["Knowledge", "/knowledge"], ["LeetCode", "/leetcode"], ["Design Chat", "/design-chat"], ["Career", "/career"]].map(([name, href]) => (
+            {[["Code Review", "/code-review"], ["Knowledge", "/knowledge"], ["LeetCode", "/leetcode"], ["Design Chat", "/design-chat"], ["Career", "/career"], ["PR Agent", "/agent"]].map(([name, href]) => (
               <Link key={name} href={href} className="text-sm text-slate-400 hover:text-slate-200 transition-colors">{name}</Link>
             ))}
           </div>
@@ -207,7 +215,7 @@ export default function LandingPage() {
             <div>
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
                 className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#6366f1]/30 bg-[#6366f1]/10 text-[#a5b4fc] text-xs font-medium mb-6">
-                <Zap size={12} /> 5 AI modules · One platform · Open source
+                <Zap size={12} /> 6 AI modules · One platform · Open source
               </motion.div>
 
               <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
@@ -220,7 +228,7 @@ export default function LandingPage() {
                 className="text-lg text-slate-400 leading-relaxed mb-8 max-w-xl">
                 A unified intelligent platform that makes developers measurably better.
                 AI code review, knowledge graph, DSA intelligence, design analysis,
-                and career analytics — all in one system.
+                career analytics, and autonomous PR review — all in one system.
               </motion.p>
 
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }}
@@ -239,7 +247,7 @@ export default function LandingPage() {
 
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.5 }}
                 className="flex flex-wrap gap-2">
-                {["Next.js 15", "FastAPI", "Groq LLaMA 70B", "pgvector", "Supabase", "Docker", "Python 3.11", "Framer Motion", "scikit-learn", "Resend"].map((badge) => (
+                {["Next.js 15", "FastAPI", "Groq LLaMA 70B", "pgvector", "Supabase", "Docker", "Python 3.11", "LangGraph", "Framer Motion", "scikit-learn", "Resend"].map((badge) => (
                   <span key={badge} className="text-[11px] px-2.5 py-1 rounded-full bg-white/[0.04] text-slate-500 border border-white/[0.06]">{badge}</span>
                 ))}
               </motion.div>
@@ -262,7 +270,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-slate-400 text-xs mb-4">
-              <Layers size={12} /> Five integrated modules
+              <Layers size={12} /> Six integrated modules
             </div>
             <h2 className="text-4xl font-bold text-slate-100 mb-4">Everything a developer needs</h2>
             <p className="text-slate-400 max-w-xl mx-auto">Each module is independent and powerful on its own. Together, they form a complete development intelligence system.</p>
