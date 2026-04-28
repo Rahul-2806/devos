@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const MODULE6_URL = process.env.NEXT_PUBLIC_MODULE6_URL || "https://RAHULSR2806-devos-module6-agent.hf.space";
+const MODULE6_URL = process.env.NEXT_PUBLIC_MODULE6_URL || "";
 
 interface Review {
   id: number;
@@ -134,10 +134,10 @@ export default function AgentPage() {
         {stats && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
             {[
-              { label: "Total PRs Reviewed", value: stats.total, color: "text-purple-400" },
+              { label: "Total PRs Reviewed", value: stats.total,            color: "text-purple-400" },
               { label: "Avg Risk Score",     value: `${stats.avg_risk}/100`, color: "text-yellow-400" },
-              { label: "Blocked",            value: stats.blocked, color: "text-red-400" },
-              { label: "Approved",           value: stats.approved, color: "text-green-400" },
+              { label: "Blocked",            value: stats.blocked,          color: "text-red-400" },
+              { label: "Approved",           value: stats.approved,         color: "text-green-400" },
             ].map(s => (
               <div key={s.label} className="bg-[#13131E] border border-slate-800 rounded-xl p-4">
                 <div className={`text-2xl font-bold ${s.color} mb-1`}>{s.value}</div>
@@ -153,7 +153,7 @@ export default function AgentPage() {
           <div className="flex flex-col sm:flex-row gap-3">
             <input
               className="flex-1 bg-[#0D0D14] border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-purple-500"
-              placeholder="owner/repo (e.g. Rahul-2806/devos)"
+              placeholder="owner/repo-name"
               value={manualRepo}
               onChange={e => setManualRepo(e.target.value)}
             />
@@ -215,7 +215,6 @@ export default function AgentPage() {
                     </div>
                   </div>
 
-                  {/* Expanded detail */}
                   {selected?.id === r.id && (
                     <div className="mt-4 pt-4 border-t border-slate-800 grid grid-cols-1 md:grid-cols-3 gap-4">
                       {[
@@ -255,11 +254,11 @@ export default function AgentPage() {
           <div className="text-xs text-slate-500 tracking-widest uppercase mb-3">GitHub Webhook Setup</div>
           <ol className="space-y-2 text-xs text-slate-400">
             <li className="flex gap-2"><span className="text-purple-400">1.</span> Go to your GitHub repo → Settings → Webhooks → Add webhook</li>
-            <li className="flex gap-2"><span className="text-purple-400">2.</span> Payload URL: <code className="text-purple-300 bg-purple-500/10 px-1 rounded">https://RAHULSR2806-devos-module6-agent.hf.space/webhook/github</code></li>
+            <li className="flex gap-2"><span className="text-purple-400">2.</span> Payload URL: <code className="text-purple-300 bg-purple-500/10 px-1 rounded">https://your-space.hf.space/webhook/github</code></li>
             <li className="flex gap-2"><span className="text-purple-400">3.</span> Content type: <code className="text-purple-300 bg-purple-500/10 px-1 rounded">application/json</code></li>
             <li className="flex gap-2"><span className="text-purple-400">4.</span> Secret: your <code className="text-purple-300 bg-purple-500/10 px-1 rounded">GITHUB_WEBHOOK_SECRET</code> value</li>
             <li className="flex gap-2"><span className="text-purple-400">5.</span> Events: select <code className="text-purple-300 bg-purple-500/10 px-1 rounded">Pull requests</code> only</li>
-            <li className="flex gap-2"><span className="text-purple-400">6.</span> Open any PR in that repo — the AI reviews it automatically in ~30s</li>
+            <li className="flex gap-2"><span className="text-purple-400">6.</span> Open any PR — the AI reviews it automatically in ~30s</li>
           </ol>
         </div>
 
